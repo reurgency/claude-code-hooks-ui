@@ -70,7 +70,7 @@ npx claude-code-hooks-ui init /path/to/project --port 4000 --no-prompts
 
 ```bash
 cd your-project
-git clone https://github.com/jboothe/claude-code-hooks-ui.git .claude/hooks
+git clone https://github.com/reurgency/claude-code-hooks-ui.git .claude/hooks
 cd .claude/hooks && ./install.sh
 ```
 

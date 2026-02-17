@@ -8,7 +8,7 @@ import { execFileSync, execSync } from 'node:child_process';
 import { join } from 'node:path';
 import { info, ok, warn, err } from './logger.js';
 
-const HOOKS_REPO = 'https://github.com/jboothe/claude-code-hooks-ui.git';
+const HOOKS_REPO = 'https://github.com/reurgency/claude-code-hooks-ui.git';
 
 function run(cmd: string, args: string[], opts?: { cwd?: string }): string {
   return execFileSync(cmd, args, {

@@ -11,7 +11,7 @@ set -euo pipefail
 #   ./install.sh . local:$(dirname "$0")
 #   ./install.sh /Users/me/my-project local:... --port 4000
 
-HOOKS_REPO="https://github.com/jboothe/claude-code-hooks-ui.git"
+HOOKS_REPO="https://github.com/reurgency/claude-code-hooks-ui.git"
 
 # Colors
 RED='\033[0;31m'

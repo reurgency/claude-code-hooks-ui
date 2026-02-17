@@ -27,7 +27,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jboothe/claude-code-hooks-ui.git",
+    "url": "https://github.com/reurgency/claude-code-hooks-ui.git",
     "directory": "packages/cli"
   },
   "devDependencies": {
