@@ -1,12 +1,15 @@
 /**
  * Merge hook registrations from settings.template.json into settings.local.json.
- * Existing hook entries in settings.local.json take precedence.
+ *
+ * Strategy: The template is authoritative for hook commands (the command strings
+ * change across versions, e.g. adding $CLAUDE_PROJECT_DIR). User settings outside
+ * the "hooks" key (permissions, statusLine, etc.) are always preserved.
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { info, ok, warn } from './logger.js';
-import { deepMerge, type JsonObject } from './config-manager.js';
+import type { JsonObject } from './config-manager.js';
 
 function readJsonFile(path: string): JsonObject {
   try {
@@ -18,7 +21,9 @@ function readJsonFile(path: string): JsonObject {
 
 /**
  * Merge settings.template.json hooks into settings.local.json.
- * Template hooks are the base; existing user hooks overlay on top (user wins).
+ *
+ * - The "hooks" key is always replaced by the template (template wins).
+ * - All other keys in settings.local.json are preserved untouched.
  */
 export function mergeSettings(templatePath: string, settingsPath: string): void {
   if (!existsSync(templatePath)) {
@@ -30,7 +35,7 @@ export function mergeSettings(templatePath: string, settingsPath: string): void 
   mkdirSync(dirname(settingsPath), { recursive: true });
 
   const template = readJsonFile(templatePath);
-  const templateHooks = template.hooks as JsonObject | undefined;
+  const templateHooks = template.hooks;
 
   if (!templateHooks) {
     warn('Template has no "hooks" key — skipping settings merge.');
@@ -45,15 +50,11 @@ export function mergeSettings(templatePath: string, settingsPath: string): void 
     return;
   }
 
-  // Existing settings — merge hooks
-  info('Merging hook registrations into existing settings...');
+  // Existing settings — replace hooks, preserve everything else
+  info('Updating hook registrations from template...');
   const existing = readJsonFile(settingsPath);
-  const existingHooks = (existing.hooks || {}) as JsonObject;
-
-  // Template hooks as base, existing hooks overlay
-  const mergedHooks = deepMerge(templateHooks, existingHooks);
-  existing.hooks = mergedHooks;
+  existing.hooks = templateHooks;
 
   writeFileSync(settingsPath, JSON.stringify(existing, null, 2) + '\n', 'utf-8');
-  ok('Hook registrations merged (existing settings preserved)');
+  ok('Hook commands updated from template (other settings preserved)');
 }
