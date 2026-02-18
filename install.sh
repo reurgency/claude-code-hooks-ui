@@ -300,6 +300,7 @@ merge_settings() {
       mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
       ok "Local overlay merged (send_event hooks added)"
     fi
+
     return
   fi
 
@@ -348,6 +349,7 @@ merge_settings() {
       mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
       ok "Local overlay merged (send_event hooks added)"
     fi
+
   else
     warn "jq not available — cannot smart-merge settings."
     warn "Template saved to $TEMPLATE_FILE"

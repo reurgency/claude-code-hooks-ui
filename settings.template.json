@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/pre_tool_use.ts"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre_tool_use.ts"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/post_tool_use.ts"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post_tool_use.ts"
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/notification.ts --notify"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/notification.ts --notify"
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/stop.ts --chat --notify"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop.ts --chat --notify"
           }
         ]
       }
@@ -50,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/subagent_stop.ts --notify"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/subagent_stop.ts --notify"
           }
         ]
       }
@@ -61,7 +61,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/pre_compact.ts"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre_compact.ts"
           }
         ]
       }
@@ -71,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/user_prompt_submit.ts --log-only --store-last-prompt --name-agent"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/user_prompt_submit.ts --log-only --store-last-prompt --name-agent"
           }
         ]
       }
@@ -81,7 +81,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/session_start.ts --add-context --announce"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_start.ts --add-context --announce"
           }
         ]
       }
@@ -91,7 +91,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun run .claude/hooks/session_end.ts"
+            "command": "bun run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_end.ts"
           }
         ]
       }
