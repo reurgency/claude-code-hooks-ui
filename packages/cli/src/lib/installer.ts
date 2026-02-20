@@ -3,8 +3,8 @@
  * Mirrors the bash install.sh logic in TypeScript.
  */
 
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
-import { execFileSync, execSync } from 'node:child_process';
+import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, copyFileSync, rmSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { info, ok, warn, err } from './logger.js';
 
@@ -25,6 +25,35 @@ function runPassthrough(cmd: string, args: string[], opts?: { cwd?: string }): v
     timeout: 120_000,
     stdio: 'inherit',
   });
+}
+
+/** Top-level names to skip when merging a clone into an existing hooks dir. */
+const MERGE_EXCLUDES = new Set([
+  'node_modules', '.git', 'logs', '.claude',
+  '.codemill', '.DS_Store', '_archive_py', 'utils', '.env',
+]);
+
+/**
+ * Recursively copy files from src into dest, skipping excluded names
+ * and never overwriting existing files (--ignore-existing behaviour).
+ */
+function mergeDir(src: string, dest: string, excludes: Set<string>): void {
+  for (const entry of readdirSync(src, { withFileTypes: true })) {
+    if (excludes.has(entry.name)) continue;
+
+    const srcPath = join(src, entry.name);
+    const destPath = join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      if (!existsSync(destPath)) mkdirSync(destPath, { recursive: true });
+      mergeDir(srcPath, destPath, excludes);
+    } else {
+      // Only copy if the file doesn't already exist (preserve user files)
+      if (!existsSync(destPath)) {
+        copyFileSync(srcPath, destPath);
+      }
+    }
+  }
 }
 
 /**
@@ -58,34 +87,11 @@ export function cloneHooks(hooksDir: string, claudeDir: string): void {
       runPassthrough('git', ['clone', '--depth', '1', HOOKS_REPO, tmpDir]);
 
       info('Merging into existing hooks directory...');
-      // Use rsync if available, otherwise manual copy
-      try {
-        runPassthrough('rsync', [
-          '-a', '--ignore-existing',
-          '--exclude=node_modules', '--exclude=.git', '--exclude=logs',
-          '--exclude=.claude/data', '--exclude=.codemill', '--exclude=.DS_Store',
-          '--exclude=_archive_py', '--exclude=utils', '--exclude=.env',
-          tmpDir + '/', hooksDir + '/',
-        ]);
-      } catch {
-        // rsync not available — use cp fallback
-        warn('rsync not found — using cp fallback');
-        try {
-          execSync(`cp -Rn "${tmpDir}/." "${hooksDir}/" 2>/dev/null || true`, { stdio: 'pipe' });
-        } catch {
-          // cp -n might not be supported everywhere
-          execSync(`cp -R "${tmpDir}/." "${hooksDir}/"`, { stdio: 'pipe' });
-        }
-        // Clean up excluded dirs
-        for (const dir of ['node_modules', '.git', 'logs', '.codemill', '_archive_py', 'utils']) {
-          try { execSync(`rm -rf "${join(hooksDir, dir)}"`, { stdio: 'pipe' }); } catch { /* ignore */ }
-        }
-        try { execSync(`rm -f "${join(hooksDir, '.env')}" "${join(hooksDir, '.DS_Store')}"`, { stdio: 'pipe' }); } catch { /* ignore */ }
-      }
+      mergeDir(tmpDir, hooksDir, MERGE_EXCLUDES);
 
       ok('Hooks merged into existing directory (existing files preserved)');
     } finally {
-      try { execSync(`rm -rf "${tmpDir}"`, { stdio: 'pipe' }); } catch { /* ignore */ }
+      try { rmSync(tmpDir, { recursive: true, force: true }); } catch { /* ignore */ }
     }
   } else {
     // Fresh clone
