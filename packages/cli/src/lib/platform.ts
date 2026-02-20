@@ -19,19 +19,15 @@ export function detectPlatform(): Platform {
 
 /**
  * Normalize a path for the current OS.
- * On Windows, converts backslashes to forward slashes and
- * translates drive letters C:/ → /c/.
+ * On Windows, converts backslashes to forward slashes.
+ *
+ * Note: Does NOT convert drive letters (C:/ → /c/) because that Git Bash
+ * convention breaks Node.js path.resolve(), which interprets /c/... as
+ * a path from the current drive root (producing C:\c\...).
  */
 export function normalizePath(p: string): string {
   if (detectPlatform() === 'windows') {
-    // Replace backslashes with forward slashes
     p = p.replace(/\\/g, '/');
-
-    // Convert drive letter C:/ → /c/
-    const driveMatch = p.match(/^([A-Za-z]):\/(.*)/);
-    if (driveMatch) {
-      p = `/${driveMatch[1].toLowerCase()}/${driveMatch[2]}`;
-    }
   }
   return p;
 }
@@ -40,7 +36,7 @@ export function normalizePath(p: string): string {
  * Resolve a target directory to absolute path and derive all standard paths.
  */
 export function resolveProjectPaths(targetDir: string) {
-  const projectRoot = resolve(normalizePath(targetDir));
+  const projectRoot = resolve(targetDir);
   return {
     projectRoot,
     claudeDir: join(projectRoot, '.claude'),
