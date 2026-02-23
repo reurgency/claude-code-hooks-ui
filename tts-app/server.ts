@@ -272,7 +272,10 @@ async function handleAPI(req: Request, path: string): Promise<Response> {
     try {
       const body = await req.json();
       const current = readUserConfig();
-      current.templates = body as Record<string, unknown>;
+      current.templates = deepMerge(
+        (current.templates ?? {}) as Record<string, unknown>,
+        body as Record<string, unknown>,
+      );
       writeUserConfig(current);
       return jsonResponse({ ok: true });
     } catch (err) {
