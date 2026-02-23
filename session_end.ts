@@ -9,7 +9,7 @@ import { ensureLocalLogDir, getProjectName } from './lib/constants';
 import { loadConfig } from './lib/config';
 import { resolveTTSProvider } from './lib/tts/resolver';
 import { speakWithLock } from './lib/queue/tts-queue';
-import { loadTemplates, renderTemplate } from './lib/templates/loader';
+import { loadTemplates, pickAndRender } from './lib/templates/loader';
 import { logTTSActivity } from './lib/activity-log';
 import type { SessionEndHookInput } from './lib/types';
 import { join } from 'path';
@@ -46,8 +46,8 @@ async function main(): Promise<void> {
       if (provider) {
         const templates = loadTemplates();
         const reasonKey = reason as keyof typeof templates.sessionEnd;
-        const template = templates.sessionEnd[reasonKey] ?? templates.sessionEnd.other;
-        const message = renderTemplate(template, {
+        const templateList = templates.sessionEnd[reasonKey] ?? templates.sessionEnd.other;
+        const message = pickAndRender(templateList, {
           projectName: getProjectName(),
           userName: loadConfig().tts.userName || '',
         });

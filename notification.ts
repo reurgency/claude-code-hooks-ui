@@ -9,7 +9,7 @@ import { ensureSessionLogDir, getProjectName } from './lib/constants';
 import { loadConfig } from './lib/config';
 import { resolveTTSProvider } from './lib/tts/resolver';
 import { speakWithLock } from './lib/queue/tts-queue';
-import { loadTemplates, renderTemplate } from './lib/templates/loader';
+import { loadTemplates, pickAndRender } from './lib/templates/loader';
 import { logTTSActivity } from './lib/activity-log';
 import type { NotificationHookInput } from './lib/types';
 import { join } from 'path';
@@ -58,11 +58,11 @@ async function announceNotification(sessionId: string): Promise<void> {
     const includeName = userName && Math.random() < config.tts.nameIncludeProbability;
 
     const templates = loadTemplates();
-    const template = includeName
+    const templateList = includeName
       ? templates.notification.withName
       : templates.notification.withoutName;
 
-    const ttsMessage = renderTemplate(template, {
+    const ttsMessage = pickAndRender(templateList, {
       projectName: getProjectName(),
       userName,
     });
