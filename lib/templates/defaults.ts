@@ -74,14 +74,38 @@ export const DEFAULT_TEMPLATES: AllTemplates = {
     },
   },
   notification: {
-    withName: '{{projectName}}: {{userName}}, your agent needs your input',
-    withoutName: '{{projectName}}: Your agent needs your input',
+    withName: [
+      '{{projectName}}: {{userName}}, your agent needs your input.',
+      '{{projectName}}: Hey {{userName}}, your agent has a question.',
+      '{{projectName}}: {{userName}}, input needed from you.',
+    ],
+    withoutName: [
+      '{{projectName}}: Your agent needs your input.',
+      '{{projectName}}: Input requested by your agent.',
+      '{{projectName}}: Your agent has a question.',
+    ],
   },
   sessionEnd: {
-    clear: '{{projectName}}: Session cleared',
-    logout: '{{projectName}}: Logging out',
-    prompt_input_exit: '{{projectName}}: Session ended',
-    other: '{{projectName}}: Session ended',
+    clear: [
+      '{{projectName}}: Session cleared.',
+      '{{projectName}}: Session has been cleared.',
+      '{{projectName}}: Cleared. Starting fresh.',
+    ],
+    logout: [
+      '{{projectName}}: Logging out.',
+      '{{projectName}}: Signed out.',
+      '{{projectName}}: Logged out successfully.',
+    ],
+    prompt_input_exit: [
+      '{{projectName}}: Session ended.',
+      '{{projectName}}: Session complete.',
+      '{{projectName}}: Exiting session.',
+    ],
+    other: [
+      '{{projectName}}: Session ended.',
+      '{{projectName}}: Session complete.',
+      '{{projectName}}: Done for now.',
+    ],
   },
 };
 
@@ -154,14 +178,38 @@ export const PROFESSIONAL_TEMPLATES: AllTemplates = {
     },
   },
   notification: {
-    withName: '{{projectName}}: {{userName}}, your attention is required',
-    withoutName: '{{projectName}}: Your attention is required',
+    withName: [
+      '{{projectName}}: {{userName}}, your attention is required.',
+      '{{projectName}}: {{userName}}, your input is requested.',
+      '{{projectName}}: {{userName}}, action is needed on your part.',
+    ],
+    withoutName: [
+      '{{projectName}}: Your attention is required.',
+      '{{projectName}}: Your input is requested.',
+      '{{projectName}}: Action is needed on your part.',
+    ],
   },
   sessionEnd: {
-    clear: '{{projectName}}: Session has been cleared',
-    logout: '{{projectName}}: Logging out of session',
-    prompt_input_exit: '{{projectName}}: Session has concluded',
-    other: '{{projectName}}: Session has concluded',
+    clear: [
+      '{{projectName}}: Session has been cleared.',
+      '{{projectName}}: The session has been reset.',
+      '{{projectName}}: Session cleared successfully.',
+    ],
+    logout: [
+      '{{projectName}}: Logging out of session.',
+      '{{projectName}}: Session logout complete.',
+      '{{projectName}}: You have been signed out.',
+    ],
+    prompt_input_exit: [
+      '{{projectName}}: Session has concluded.',
+      '{{projectName}}: The session has ended.',
+      '{{projectName}}: Session terminated.',
+    ],
+    other: [
+      '{{projectName}}: Session has concluded.',
+      '{{projectName}}: The session has ended.',
+      '{{projectName}}: Session terminated.',
+    ],
   },
 };
 
@@ -234,14 +282,38 @@ export const CONCISE_TEMPLATES: AllTemplates = {
     },
   },
   notification: {
-    withName: '{{projectName}}: {{userName}}, input needed',
-    withoutName: '{{projectName}}: Input needed',
+    withName: [
+      '{{projectName}}: {{userName}}, input needed.',
+      '{{projectName}}: {{userName}}, need you.',
+      '{{projectName}}: {{userName}}, quick question.',
+    ],
+    withoutName: [
+      '{{projectName}}: Input needed.',
+      '{{projectName}}: Need your input.',
+      '{{projectName}}: Question for you.',
+    ],
   },
   sessionEnd: {
-    clear: '{{projectName}}: Cleared',
-    logout: '{{projectName}}: Logged out',
-    prompt_input_exit: '{{projectName}}: Ended',
-    other: '{{projectName}}: Ended',
+    clear: [
+      '{{projectName}}: Cleared.',
+      '{{projectName}}: Reset.',
+      '{{projectName}}: Fresh start.',
+    ],
+    logout: [
+      '{{projectName}}: Logged out.',
+      '{{projectName}}: Signed off.',
+      '{{projectName}}: Out.',
+    ],
+    prompt_input_exit: [
+      '{{projectName}}: Ended.',
+      '{{projectName}}: Done.',
+      '{{projectName}}: Exited.',
+    ],
+    other: [
+      '{{projectName}}: Ended.',
+      '{{projectName}}: Done.',
+      '{{projectName}}: Wrapped up.',
+    ],
   },
 };
 
@@ -314,14 +386,38 @@ export const PLAYFUL_TEMPLATES: AllTemplates = {
     },
   },
   notification: {
-    withName: '{{projectName}}: Yo {{userName}}, your agent needs a hand over here!',
-    withoutName: '{{projectName}}: Hey, your agent needs a hand over here!',
+    withName: [
+      '{{projectName}}: Yo {{userName}}, your agent needs a hand over here!',
+      '{{projectName}}: Hey {{userName}}, your agent is calling for backup!',
+      '{{projectName}}: {{userName}}, heads up! Your agent has a question.',
+    ],
+    withoutName: [
+      '{{projectName}}: Hey, your agent needs a hand over here!',
+      '{{projectName}}: Your agent is calling for backup!',
+      '{{projectName}}: Heads up! Your agent has a question.',
+    ],
   },
   sessionEnd: {
-    clear: '{{projectName}}: Session wiped clean! Fresh start awaits.',
-    logout: '{{projectName}}: Peace out! Logging off.',
-    prompt_input_exit: '{{projectName}}: That is a wrap! See you next time.',
-    other: '{{projectName}}: That is a wrap! See you next time.',
+    clear: [
+      '{{projectName}}: Session wiped clean! Fresh start awaits.',
+      '{{projectName}}: Clean slate! Ready to roll again.',
+      '{{projectName}}: Poof! Session cleared.',
+    ],
+    logout: [
+      '{{projectName}}: Peace out! Logging off.',
+      '{{projectName}}: Catch you later! Signing off.',
+      '{{projectName}}: Adios! Logged out.',
+    ],
+    prompt_input_exit: [
+      '{{projectName}}: That is a wrap! See you next time.',
+      '{{projectName}}: And scene! Until next time.',
+      '{{projectName}}: Bye for now! It was fun.',
+    ],
+    other: [
+      '{{projectName}}: That is a wrap! See you next time.',
+      '{{projectName}}: And scene! Until next time.',
+      '{{projectName}}: Later! Session complete.',
+    ],
   },
 };
 

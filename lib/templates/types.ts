@@ -30,16 +30,16 @@ export interface SubagentStopTemplates {
 
 /** Template for notification hook */
 export interface NotificationTemplates {
-  withName: string;
-  withoutName: string;
+  withName: string[];
+  withoutName: string[];
 }
 
 /** Template for session end hook */
 export interface SessionEndTemplates {
-  clear: string;
-  logout: string;
-  prompt_input_exit: string;
-  other: string;
+  clear: string[];
+  logout: string[];
+  prompt_input_exit: string[];
+  other: string[];
 }
 
 /** All templates */
