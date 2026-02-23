@@ -752,6 +752,16 @@ function renderSettings() {
   // Your name
   setValue('tts-userName', c.tts?.userName ?? '');
 
+  // Template variables — Project Name
+  const projectNameVal = c.project?.name ?? '';
+  setValue('project-name', projectNameVal);
+  const projectNameInput = document.getElementById('project-name');
+  const projectNameCount = document.getElementById('project-name-count');
+  projectNameCount.textContent = `${projectNameVal.length} / 50`;
+  projectNameInput.addEventListener('input', () => {
+    projectNameCount.textContent = `${projectNameInput.value.length} / 50`;
+  });
+
   // Name include probability
   const nameProbSlider = document.getElementById('nameIncludeProbability');
   nameProbSlider.value = c.tts?.nameIncludeProbability ?? 0.3;
@@ -799,8 +809,10 @@ function renderSettings() {
 
 document.getElementById('btn-save-settings').addEventListener('click', async () => {
   const newPort = parseInt(document.getElementById('server-port').value) || 3455;
+  const projectNameRaw = getValue('project-name').trim();
   const updates = {
     server: { port: newPort },
+    project: { name: projectNameRaw || null },
     tts: {
       enabled: isChecked('tts-enabled'),
       userName: getValue('tts-userName'),

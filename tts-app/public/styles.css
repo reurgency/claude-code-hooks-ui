@@ -367,6 +367,14 @@ h4 {
   margin-bottom: 4px;
 }
 
+.char-count {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+}
+
 input[type="text"],
 input[type="number"],
 input[type="url"],
