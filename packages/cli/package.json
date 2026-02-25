@@ -1,6 +1,6 @@
 {
   "name": "claude-code-hooks-ui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "CLI installer for claude-code-hooks — TTS, guardrails, and activity hooks for Claude Code",
   "type": "module",
   "bin": {
